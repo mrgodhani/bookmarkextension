@@ -2,6 +2,7 @@ import fs from "fs";
 import gulp from 'gulp';
 import {merge} from 'event-stream'
 import browserify from 'browserify';
+import vueify from 'vueify';
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
 import preprocessify from 'preprocessify';
@@ -131,7 +132,8 @@ function buildJS(target) {
     'contentscript.js',
     'options.js',
     'popup.js',
-    'livereload.js'
+    'livereload.js',
+    'app.js'
   ]
 
   let tasks = files.map( file => {
@@ -144,16 +146,17 @@ function buildJS(target) {
       includeExtensions: ['.js'],
       context: context
     })
+    .transform(vueify)
     .bundle()
     .pipe(source(file))
     .pipe(buffer())
     .pipe(gulpif(!production, $.sourcemaps.init({ loadMaps: true }) ))
     .pipe(gulpif(!production, $.sourcemaps.write('./') ))
-    .pipe(gulpif(production, $.uglify({ 
+    .pipe(gulpif(production, $.uglify({
       "mangle": false,
       "output": {
         "ascii_only": true
-      } 
+      }
     })))
     .pipe(gulp.dest(`build/${target}/scripts`));
   });
