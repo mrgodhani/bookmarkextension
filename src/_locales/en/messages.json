@@ -1,14 +1,14 @@
 {
   "appName": {
-    "message": "Ext Starter",
-    "description": "The name of the extension."
+    "message": "Bookmark",
+    "description": "Simple bookmark extension to bookmark links"
   },
   "appDescription": {
-    "message": "Boilerplate for building cross browser extensions",
-    "description": "The description of the extension."
+    "message": "Simple bookmark extension to bookmark links",
+    "description": "Simple bookmark extension to bookmark links"
   },
   "btnTooltip": {
-    "message": "Ext Starter",
-    "description": "Tooltip for the button."
+    "message": "Bookmark",
+    "description": "Simple bookmark extension to bookmark links"
   }
 }
