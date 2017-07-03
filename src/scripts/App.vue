@@ -90,6 +90,7 @@ export default {
       const category = _.filter(this.categories, ['name', this.category]);
       data.category = category[0];
       this.db.ref('bookmarks').push(data);
+      window.close();
     },
     addAppId(id) {
       storage.set({ 'id': id }, function () {
