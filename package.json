@@ -54,6 +54,7 @@
   },
   "dependencies": {
     "lodash": "^4.17.4",
+    "urijs": "^1.18.10",
     "vue-material": "^0.7.4"
   }
 }

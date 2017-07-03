@@ -9,7 +9,7 @@
     </div>
     <div v-if="token !== null">
       <p>
-        <img :src="bookmark.favicon" width="15" height="15">
+        <img :src="bookmark.favicon" width="15" height="15"> {{ domain }}
       </p>
       <p>
         <span class="md-title"> {{ bookmark.title }}</span>
@@ -32,6 +32,7 @@ import ext from "./utils/ext";
 import storage from "./utils/storage";
 import firebase from 'firebase';
 import _ from 'lodash';
+import URI from 'urijs'
 
 export default {
   data() {
@@ -41,6 +42,7 @@ export default {
       category: null,
       categories: [],
       db: null,
+      domain: null,
       bookmark: {
         title: null,
         description: null,
@@ -61,7 +63,8 @@ export default {
         self.bookmark.title = data.title;
         self.bookmark.description = data.description
         self.bookmark.favicon = activeTab.favIconUrl
-        self.bookmark.url = data.title
+        self.bookmark.url = data.url
+        self.domain = new URI(data.url).domain()
       });
     });
   },
