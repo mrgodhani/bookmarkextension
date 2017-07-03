@@ -31,6 +31,7 @@
 import ext from "./utils/ext";
 import storage from "./utils/storage";
 import firebase from 'firebase';
+import _ from 'lodash';
 
 export default {
   data() {
@@ -39,13 +40,30 @@ export default {
       token: null,
       category: null,
       categories: [],
+      db: null,
       bookmark: {
         title: null,
         description: null,
         url: null,
-        favicon: null
+        favicon: null,
+        category: {
+          name: null,
+          color: null
+        }
       }
     }
+  },
+  beforeCreate() {
+    const self = this;
+    ext.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      var activeTab = tabs[0];
+      chrome.tabs.sendMessage(activeTab.id, { action: 'process-page' }, (data) => {
+        self.bookmark.title = data.title;
+        self.bookmark.description = data.description
+        self.bookmark.favicon = activeTab.favIconUrl
+        self.bookmark.url = data.title
+      });
+    });
   },
   created() {
     const self = this;
@@ -56,33 +74,22 @@ export default {
         const fire = firebase.initializeApp({
           databaseURL: databaseUrl
         });
-        const db = fire.database();
-        const categories = db.ref('categories');
-        const bookmarks = db.ref('bookmarks');
+        self.db = fire.database();
+        const categories = self.db.ref('categories');
+        const bookmarks = self.db.ref('bookmarks');
         categories.on('value', (snapshot) => {
           self.categories = snapshot.val();
         }, function (err) {
           console.log(err.code);
         });
       }
-    })
-
-    ext.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      var activeTab = tabs[0];
-      self.bookmark.title = activeTab.title;
-      self.bookmark.url = activeTab.url;
-      self.bookmark.favicon = activeTab.favIconUrl
     });
   },
   methods: {
-    renderBookmark(data) {
-      console.log(data)
-      // this.bookmark.title = data.title;
-      // this.bookmark.description = data.description;
-      // this.bookmark.url = data.url;
-    },
     addBookmark(data) {
-
+      const category = _.filter(this.categories, ['name', this.category]);
+      data.category = category[0];
+      this.db.ref('bookmarks').push(data);
     },
     addAppId(id) {
       storage.set({ 'id': id }, function () {

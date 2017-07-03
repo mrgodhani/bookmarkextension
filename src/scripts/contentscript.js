@@ -29,7 +29,6 @@ var extractTags = () => {
 
 function onRequest(request, sender, sendResponse) {
   if (request.action === 'process-page') {
-    console.log('WORKS')
     sendResponse(extractTags())
   }
 }

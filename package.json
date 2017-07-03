@@ -53,6 +53,7 @@
     "vue": "vue/dist/vue.common.js"
   },
   "dependencies": {
+    "lodash": "^4.17.4",
     "vue-material": "^0.7.4"
   }
 }
