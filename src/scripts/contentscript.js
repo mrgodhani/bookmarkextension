@@ -22,11 +22,14 @@ var extractTags = () => {
     data.description = descriptionTag.getAttribute("content")
   }
 
+  console.log(data);
+
   return data;
 }
 
 function onRequest(request, sender, sendResponse) {
   if (request.action === 'process-page') {
+    console.log('WORKS')
     sendResponse(extractTags())
   }
 }
