@@ -8,6 +8,8 @@
   </p>
 </div>
 
+![img](screenshot.png)
+
 ## Installation
 1. Clone the repository `git clone https://github.com/EmailThis/extension-boilerplate.git`
 2. Run `npm install`
