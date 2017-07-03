@@ -36,3 +36,8 @@ The following tasks can be used when you want to start developing the extension 
 
 ## Packaging
 Run `npm run dist` to create a zipped, production-ready extension for each browser. You can then upload that to the appstore.
+
+## How it works
+1. Install extension as per above
+2. After install when you first click on extension it would ask for firebase project id. Use same project id that is being used in [bookmark desktop application](https://github.com/mrgodhani/bookmark).
+3. Start bookmarking any link. Bookmarked links would appear in desktop app real time.
