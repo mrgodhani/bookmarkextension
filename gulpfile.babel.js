@@ -69,6 +69,9 @@ gulp.task('js', () => {
 })
 
 gulp.task('styles', () => {
+  gulp.src("node_modules/vue-material/dist/vue-material.css")
+      .pipe(gulp.dest(`build/${target}/styles`));
+
   return gulp.src('src/styles/**/*.scss')
     .pipe($.plumber())
     .pipe($.sass.sync({
@@ -130,7 +133,6 @@ function buildJS(target) {
   const files = [
     'background.js',
     'contentscript.js',
-    'options.js',
     'popup.js',
     'livereload.js',
     'app.js'
